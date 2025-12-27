@@ -1,0 +1,72 @@
+:root {
+  --dark-color: #355028;
+  --medium-color: #d6e0d6;
+  --light-color: #fffef6;
+}
+
+.body,
+.html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+
+  .button-bar {
+    height: 100px;
+    background-color: var(--dark-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      border-radius: 10px;
+      width: 100px;
+      height: 40px;
+      background-color: var(--medium-color);
+    }
+    button:hover {
+      background-color: var(--light-color);
+    }
+  }
+
+  .bookshelf {
+    height: 100%;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 30px;
+    background-color: var(--medium-color);
+    .shelved {
+      background-color: var(--light-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 2px 2px 2px;
+      .btnContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        input {
+            margin: 10px;
+        }
+        button {
+          border-radius: 10px;
+          align-self: end;
+          width: 100px;
+          height: 40px;
+          background-color: var(--dark-color);
+          color: white;
+        }
+        button:hover {
+          background-color: var(--medium-color);
+        }
+      }
+    }
+  }
+}
