@@ -1,23 +1,3 @@
-const myLibrary = [];
-const bookshelf = document.querySelector(".bookshelf");
-
-// tester books
-const songOfAchilles = new Book(
-  "Song of Achilles",
-  "Madeleine Miller",
-  200,
-  true
-);
-const thePhantomTollBooth = new Book(
-  "The Phantom Tollbooth",
-  "Norton Juster",
-  150,
-  false
-);
-
-myLibrary.push(songOfAchilles);
-myLibrary.push(thePhantomTollBooth);
-
 // variables to add new book
 const newBookBtn = document.querySelector("#newBookBtn");
 const dialog = document.querySelector("dialog");
@@ -41,21 +21,26 @@ confirmBtn.addEventListener("click", (event) => {
   dialog.close();
 });
 
-function Book(title, author, numPages, hasBeenRead) {
-  if (!new.target)
-    throw Error("You must use the 'new' operator to call the constructor.");
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.numPages = numPages;
-  this.hasBeenRead = hasBeenRead;
-  this.info = function () {
+class Book {
+  constructor(title, author, numPages, hasBeenRead) {
+    this.title = title;
+    this.author = author;
+    this.numPages = numPages;
+    this.hasBeenRead = hasBeenRead;
+    this.id = crypto.randomUUID();
+  }
+
+  info() {
     if (this.hasBeenRead) {
       return `${this.title} by ${this.author}, ${this.numPages} pages, read`;
     } else {
       return `${this.title} by ${this.author}, ${this.numPages} pages, not read yet`;
     }
-  };
+  }
+
+  toggleReadStatus() {
+    this.hasBeenRead = !this.hasBeenRead;
+  }
 }
 
 function addBookToLibrary(title, author, numPages, hasBeenRead) {
@@ -99,7 +84,7 @@ function displayBooks() {
     }
 
     hasBeenReadBox.addEventListener("change", () => {
-      book.hasBeenRead = !book.hasBeenRead;
+      book.toggleReadStatus();
       bookInfo.textContent = book.info();
     });
 
@@ -118,5 +103,25 @@ function displayBooks() {
     bookshelf.appendChild(newBook);
   }
 }
+
+const myLibrary = [];
+const bookshelf = document.querySelector(".bookshelf");
+
+// tester books
+const songOfAchilles = new Book(
+  "Song of Achilles",
+  "Madeleine Miller",
+  200,
+  true
+);
+const thePhantomTollBooth = new Book(
+  "The Phantom Tollbooth",
+  "Norton Juster",
+  150,
+  false
+);
+
+myLibrary.push(songOfAchilles);
+myLibrary.push(thePhantomTollBooth);
 
 displayBooks();
