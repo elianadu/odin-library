@@ -1,15 +1,21 @@
 // variables to add new book
 const newBookBtn = document.querySelector("#newBookBtn");
 const dialog = document.querySelector("dialog");
-const confirmBtn = document.querySelector("#confirmBtn");
+const form = document.querySelector("form");
 
 // show dialog on click
 newBookBtn.addEventListener("click", () => {
   dialog.showModal();
 });
 
-confirmBtn.addEventListener("click", (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
+  validateBookForm();
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const numPages = document.querySelector("#numPages").value;
@@ -20,6 +26,48 @@ confirmBtn.addEventListener("click", (event) => {
   displayBooks();
   dialog.close();
 });
+
+const formMessages = {
+  title: "Please enter a title.",
+  author: "Please enter an author.",
+};
+
+function validateInput(element, message) {
+  if (isEmpty(element.value)) {
+    element.setCustomValidity(message);
+  } else {
+    element.setCustomValidity("");
+  }
+}
+
+for (let input in formMessages) {
+  const element = document.getElementById(input);
+  element.addEventListener(
+    "input",
+    validateInput(element, formMessages[input])
+  );
+}
+
+function validateBookForm() {
+  for (let input in formMessages) {
+    const element = document.getElementById(input);
+    validateInput(element, formMessages[input]);
+  }
+}
+
+function isEmpty(str) {
+  return !str.trim().length;
+}
+
+/* const title = document.getElementById("title");
+function validateTitle() {
+  if (isEmpty(title.value)) {
+    title.setCustomValidity("bro enter a title");
+  } else {
+    title.setCustomValidity("");
+  }
+}*/
+form.addEventListener("input", validateBookForm);
 
 class Book {
   constructor(title, author, numPages, hasBeenRead) {
